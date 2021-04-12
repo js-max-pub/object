@@ -11,3 +11,10 @@ export function extend(object, ...p) {
 		for (let f of p[i] ?? [])
 			Object.defineProperty(object.prototype, f.name, { [n[i]]: function (...p) { return f(this, ...p) } })
 }
+
+export function select(object, ...keys) {
+	return Object.fromEntries(
+		Object.entries(object)
+			.filter(([key]) => keys.includes(key))
+	)
+}

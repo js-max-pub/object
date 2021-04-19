@@ -18,3 +18,19 @@ export function select(object, ...keys) {
 			.filter(([key]) => keys.includes(key))
 	)
 }
+
+export function length(object) {
+	return Object.keys(object).length
+}
+
+export function size(x) {
+	switch (typeof x) {
+		case 'number': return 8
+		case 'boolean': return 4
+		case 'string': return x.length * 2
+		case 'object':
+			if (Array.isArray(x)) return x.reduce((acc, val) => acc + size(val), 0)
+			else return size(Object.keys(x)) + size(Object.values(x))
+	}
+	return 0
+}

@@ -4,6 +4,7 @@ export function copy(o) {
 
 
 // export function extend(object, functions = [], getter = [], setter = []) {
+// object.extend(Array, [array.removeValue, array.sortBy, array.unique], [array.first, array.last])
 export function extend(object, ...p) {
 	// p == functions, getter, setter
 	let n = ['value', 'get', 'set']
@@ -34,3 +35,25 @@ export function size(x) {
 	}
 	return 0
 }
+
+export const filter = (o, f) => Object.fromEntries(Object.entries(o).filter(([k, v]) => f(k, v)))
+
+export const map = (o, f) => Object.fromEntries(Object.entries(o).map(([k, v]) => f(k, v)))
+export const mapKeys = (o, f) => map(o, (k, v) => [f(k), v])
+export const mapValues = (o, f) => map(o, (k, v) => [k, f(v)])
+// export const mapKeys = (o, f) => Object.fromEntries(Object.entries(o).map(([k, v]) => [f(k), v]))
+// export const mapValues = (o, f) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, f(v)]))
+
+
+// export function compare(a, b) {
+// 	if (a > b) return 1
+// 	if (a < b) return -1
+// 	return 0
+// }
+export const compare = (a, b) => a > b ? 1 : (a < b ? -1 : 0)
+
+
+export const sortByKey = o => Object.fromEntries(Object.entries(o).sort((a, b) => compare(a[0], b[0])))
+export const sortByValue = (o, prop) => Object.fromEntries(Object.entries(o).sort((a, b) => compare(prop(a[1], prop(b[1])))))
+
+export const not = x => x === null || isNaN(x) // isNaN covers "invalid date" and "undefined", too    || x === undefined
